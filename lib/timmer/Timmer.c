@@ -4,7 +4,7 @@ uint32_t ms= 0;
 
 void timer_init(void) {
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-    TIM2->CR1 &= ~TIM_CR1_CEN;
+    TIM2->CR1 &= ~TIM_CR1_CEN;// Lo fuerzo a 0
     TIM2->PSC = 7; 
     TIM2->ARR = 0xFFFF;
     TIM2->CNT = 0;
@@ -13,10 +13,11 @@ void timer_init(void) {
     TIM2->SR = ~TIM_SR_UIF;
     NVIC_EnableIRQ(TIM2_IRQn);
     NVIC_SetPriority(TIM2_IRQn, 2);
-    TIM2->CR1 |= TIM_CR1_CEN;
+    TIM2->CR1 |= TIM_CR1_CEN; // Lo fuerzo a 1
 }
 
 void TIM2_IRQHandler(void) {
+
     if (TIM2->SR & TIM_SR_UIF) {
         TIM2->SR = ~TIM_SR_UIF;
         ms += 65536;

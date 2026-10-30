@@ -10,7 +10,8 @@ void pwm_init(uint8_t canal, uint32_t frec) {
     TIM3->ARR = arr_val;
      if (canal == 1) {
         GPIOA->CRL &= ~(0xF << (6 * 4));
-        GPIOA->CRL |=  (0xB << (6 * 4)); TIM3->CCMR1 &= ~TIM_CCMR1_OC1M;
+        GPIOA->CRL |=  (0xB << (6 * 4));
+         TIM3->CCMR1 &= ~TIM_CCMR1_OC1M;
         TIM3->CCMR1 |=  (6 << TIM_CCMR1_OC1M_Pos) | TIM_CCMR1_OC1PE;
         TIM3->CCER  |=  TIM_CCER_CC1E;
     } 
@@ -38,7 +39,7 @@ void pwm_init(uint8_t canal, uint32_t frec) {
         TIM3->CCMR2 |=  (6 << TIM_CCMR2_OC4M_Pos) | TIM_CCMR2_OC4PE;
         TIM3->CCER  |=  TIM_CCER_CC4E;
     }
-     TIM3->CR1 |= TIM_CR1_ARPE | TIM_CR1_CEN;
+     TIM3->CR1 |= TIM_CR1_CEN;
     TIM3->EGR |= TIM_EGR_UG;
 }
 
